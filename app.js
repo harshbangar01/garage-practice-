@@ -2,7 +2,7 @@ import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module
 import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
 import { gsap } from 'https://cdn.skypack.dev/gsap';
 import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js';
-// import { GUI } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/libs/lil-gui.module.min.js';
+import { GUI } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/libs/lil-gui.module.min.js';
 
 const camera = new THREE.PerspectiveCamera(
     10,
@@ -18,10 +18,10 @@ let mixer;
 const loader = new GLTFLoader();
 loader.load('/assets/garage.glb',
     function (gltf) {
-        bee = gltf.scene;
-        scene.add(bee);
+        garage = gltf.scene;
+        scene.add(garage);
 
-        mixer = new THREE.AnimationMixer(bee);
+        mixer = new THREE.AnimationMixer(garage);
         mixer.clipAction(gltf.animations[0]).play();
         modelMove();
     },
@@ -48,8 +48,6 @@ loaderCarpet.load('/assets/car.glb',
 );
 
 scene.add(loaderCarpet);
-
-
 
 const textureLoader = new THREE.TextureLoader();
 const texture = textureLoader.load('/assets/speckled-granite-tiles-bl/speckled-granite-tiles_albedo.png');
@@ -149,3 +147,7 @@ window.addEventListener('resize', () => {
     camera.aspect = window.innerWidth / window.innerHeight;
     camera.updateProjectionMatrix();
 })
+const gui = new GUI();
+gui.add(camera.position, 'x', -100, 100).name('Camera X');
+gui.add(camera.position, 'y', -100, 100).name('Camera Y');
+gui.add(camera.position, 'z', -100, 100).name('Camera Z');
